@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdsPower启动器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #fff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            gap: 10px; 
+            padding:10px;
+        }
+
+        .header img {
+            height: 100px; 
+            width: auto;
+        }
+
+        .header h1 {
+            font-size: 24px; 
+            margin: 0;
+        }
+        .intro{
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: #f8f9fa;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .generate-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        #generate-cmd,
+        #copy-groups {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #generate-cmd {
+            background: linear-gradient(135deg, #007bff, #0062cc);
+            color: white;
+        }
+
+        #copy-groups {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            color: white;
+        }
+
+        .cmd-container {
+            margin-top: 1rem;
+        }
+
+        .cmd-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .group-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .group-number {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 80px;
+        }
+
+        .group-ids {
+            color: #666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .exec-btn {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: opacity 0.2s;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .copybtn { background: linear-gradient(135deg, #17a2b8, #138496); }
+        .startbtn { background: linear-gradient(135deg, #28a745, #218838); }
+        .closetbtn { background: linear-gradient(135deg, #dc3545, #c82333); }
+
+        .batch-section {
+            border-top: 1px solid #eee;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+
+        .batch-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .cmd-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .action-btns {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .generate-btns {
+                flex-direction: column;
+            }
+        }
+        .group-info input {
+            width: 30px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://ludekuai.cc/tools/adspower_launcher/logo.png">
+        <h1>AdsPower启动器</h1>
+    </div>
+      <p class="intro">网站：<a href="https://ludekuai.cc" target="_blank">ludekuai.cc</a> | 作者推特：<a href="https://x.com/0xlin888" target="_blank">@0xlin</a> | Github：<a href="https://github.com/0xlin888/adspower_launcher" target="_blank">源码</a> | TG：<a href="https://t.me/oxlin888" target="_blank">0xlin</a></p>
+      <p class="intro">所有请求和数据在本地，不会收集和上传任何数据到网站</p>
+    <div class="container">
+        <label for="api-url">API接口地址</label>
+        <input type="text" id="api-url" placeholder="输入接口地址" value="http://127.0.0.1:50325">
+
+        <label for="id-list">环境编号</label>
+        <textarea id="id-list" placeholder="输入环境序号（支持范围格式如1-5, 或每行一个，不连续序号用逗号分隔）" rows="3"></textarea>
+
+        <label for="group-size">每组数量</label>
+        <input type="number" id="group-size" min="1" placeholder="输入每组数量">
+
+        <div class="batch-section">
+            <label for="batch-range">批量操作范围</label>
+            <input type="text" id="batch-range" placeholder="支持格式：单个数字（3），连续范围（1-5），不连续序号用逗号分隔">
+            <div class="batch-actions">
+                <button id="batch-start" class="exec-btn startbtn">批量启动</button>
+                <button id="batch-close" class="exec-btn closetbtn">批量关闭</button>
+            </div>
+        </div>
+
+        <div class="generate-btns">
+            <button id="generate-cmd">随机分组</button>
+            <button id="copy-groups">复制分组结果</button>
+        </div>
+
+        <div class="cmd-container" id="cmd-output"></div>
+    </div>
+
+    <script>
+        // 数据持久化
+        document.addEventListener('DOMContentLoaded', () => {
+            ['api-url', 'id-list', 'group-size', 'batch-range'].forEach(id => {
+                const saved = localStorage.getItem(id);
+                if (saved) document.getElementById(id).value = saved;
+            });
+
+            document.querySelectorAll('input, textarea').forEach(el => {
+                el.addEventListener('input', () => localStorage.setItem(el.id, el.value));
+            });
+        });
+
+        // 输入解析器
+        const rangeParser = {
+            parse(input) {
+                const result = new Set();
+                input.split(/[\n,]+/).forEach(part => {
+                    const trimmed = part.trim();
+                    if (!trimmed) return;
+
+                    if (trimmed.includes('-')) {
+                        const [a, b] = trimmed.split('-').map(Number);
+                        if (!isNaN(a) && !isNaN(b)) {
+                            const start = Math.min(a, b);
+                            const end = Math.max(a, b);
+                            for (let i = start; i <= end; i++) result.add(i);
+                        }
+                    } else {
+                        const num = parseInt(trimmed);
+                        if (!isNaN(num)) result.add(num);
+                    }
+                });
+                return Array.from(result).sort((a, b) => a - b);
+            }
+        };
+
+        // API客户端
+        const apiClient = {
+            async handleAction(ids, action) {
+                const apiUrl = document.getElementById('api-url').value;
+                const requests = ids.map((id, index) => 
+                    new Promise(resolve => {
+                        setTimeout(async () => {
+                            try {
+                                const endpoint = action === 'start' ? 'start' : 'stop';
+                                await fetch(`${apiUrl}/api/v1/browser/${endpoint}?serial_number=${id}`, {
+                                    mode: 'no-cors'
+                                });
+                                console.log(`${action} success: ${id}`);
+                            } catch (error) {
+                                console.error(`${action} error: ${id}`, error);
+                            }
+                            resolve();
+                        }, index * 1000); // 1秒间隔
+                    })
+                );
+                return Promise.all(requests);
+            }
+        };
+
+        // 分组管理器
+        const groupManager = {
+            currentGroups: [],
+
+            generateGroups() {
+                const ids = rangeParser.parse(document.getElementById('id-list').value);
+                const groupSize = parseInt(document.getElementById('group-size').value) || 1;
+                
+                if (!ids.length) return alert('请输入有效环境编号');
+                if (groupSize < 1) return alert('分组数量无效');
+
+                const shuffled = [...ids].sort(() => Math.random() - 0.5);
+                const groups = [];
+                while (shuffled.length) {
+                    groups.push(shuffled.splice(0, groupSize));
+                }
+                this.currentGroups = groups;
+                this.renderGroups(groups);
+            },
+
+            renderGroups(groups) {
+                const container = document.getElementById('cmd-output');
+                container.innerHTML = groups.map((group, index) => `
+                    <div class="cmd-group">
+                        <div class="group-info">
+                            <input type="checkbox">
+                            <span class="group-number">第${index + 1}组</span>
+                            <span class="group-ids">${group.join(', ')}</span>
+                        </div>
+                        <div class="action-btns">
+                            <button class="exec-btn copybtn">复制</button>
+                            <button class="exec-btn startbtn">启动</button>
+                            <button class="exec-btn closetbtn">关闭</button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                container.querySelectorAll('.cmd-group').forEach((groupEl, index) => {
+                    this.bindEvents(groupEl, groups[index]);
+                });
+            },
+
+            bindEvents(groupEl, ids) {
+                const [copyBtn, startBtn, closeBtn] = groupEl.querySelectorAll('button');
+                
+                copyBtn.onclick = () => {
+                    navigator.clipboard.writeText(ids.join(', '))
+                        .then(() => this.showAlert('已复制', copyBtn))
+                        .catch(() => this.showAlert('复制失败', copyBtn, true));
+                };
+
+                startBtn.onclick = async () => {
+                    startBtn.disabled = true;
+                    startBtn.textContent = '启动中...';
+                    try {
+                        await apiClient.handleAction(ids, 'start');
+                        this.showAlert('启动成功', startBtn);
+                        startBtn.textContent = '关闭';
+                        closeBtn.textContent = '启动';
+                    } catch {
+                        this.showAlert('启动失败', startBtn, true);
+                        startBtn.textContent = '启动';
+                    } finally {
+                        startBtn.disabled = false;
+                    }
+                };
+
+                closeBtn.onclick = async () => {
+                    closeBtn.disabled = true;
+                    closeBtn.textContent = '关闭中...';
+                    try {
+                        await apiClient.handleAction(ids, 'stop');
+                        this.showAlert('关闭成功', closeBtn);
+                        startBtn.textContent = '启动';
+                        closeBtn.textContent = '关闭';
+                    } catch {
+                        this.showAlert('关闭失败', closeBtn, true);
+                        closeBtn.textContent = '关闭';
+                    } finally {
+                        closeBtn.disabled = false;
+                    }
+                };
+            },
+
+            showAlert(message, target, isError = false) {
+                const alert = document.createElement('div');
+                alert.textContent = message;
+                alert.style = `position: absolute; padding: 4px 8px; border-radius: 4px; 
+                    background: ${isError ? '#dc3545' : '#28a745'}; color: white;`;
+                target.parentNode.appendChild(alert);
+                setTimeout(() => alert.remove(), 1000);
+            }
+        };
+
+        // 批量操作
+        document.getElementById('batch-start').onclick = async () => {
+            const btn = document.getElementById('batch-start');
+            btn.disabled = true;
+            btn.textContent = '批量启动中...';
+            
+            try {
+                const ids = rangeParser.parse(document.getElementById('batch-range').value);
+                await apiClient.handleAction(ids, 'start');
+                groupManager.showAlert(`已启动 ${ids.length} 个环境`, btn);
+            } catch {
+                groupManager.showAlert('启动失败', btn, true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '批量启动';
+            }
+        };
+
+        document.getElementById('batch-close').onclick = async () => {
+            const btn = document.getElementById('batch-close');
+            btn.disabled = true;
+            btn.textContent = '批量关闭中...';
+            
+            try {
+                const ids = rangeParser.parse(document.getElementById('batch-range').value);
+                await apiClient.handleAction(ids, 'stop');
+                groupManager.showAlert(`已关闭 ${ids.length} 个环境`, btn);
+            } catch {
+                groupManager.showAlert('关闭失败', btn, true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '批量关闭';
+            }
+        };
+
+        // 初始化
+        document.getElementById('generate-cmd').onclick = () => groupManager.generateGroups();
+
+        // 新增复制所有分组功能
+        document.getElementById('copy-groups').onclick = () => {
+            if (!groupManager.currentGroups.length) {
+                return alert('请先进行随机分组');
+            }
+            
+            const text = groupManager.currentGroups
+                .map(group => group.join(', '))
+                .join('\n');
+            
+            navigator.clipboard.writeText(text)
+                .then(() => groupManager.showAlert('复制成功', document.getElementById('copy-groups')))
+                .catch(() => groupManager.showAlert('复制失败', document.getElementById('copy-groups'), true));
+        };
+    </script>
+</body>
+</html>
