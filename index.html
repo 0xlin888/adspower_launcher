@@ -345,8 +345,8 @@
                     try {
                         await apiClient.handleAction(ids, 'start');
                         this.showAlert('启动成功', startBtn);
-                        startBtn.textContent = '关闭';
-                        closeBtn.textContent = '启动';
+                        startBtn.textContent = '启动';
+                        closeBtn.textContent = '关闭';
                     } catch {
                         this.showAlert('启动失败', startBtn, true);
                         startBtn.textContent = '启动';
